@@ -9,8 +9,10 @@ const DataComponent = () => {
     const [data, setData] = useState([]);
     const [timestamps, setTimestamps] = useState([]);
     const [rawValues, setRawValues] = useState([]);
+    const [meditationValues, setMeditationValues] = useState([])
 
     const dataset = 'Attention'
+    const dataset2 = 'theta'
 
     useEffect(() => {
         const socket = io('http://localhost:8080');
@@ -19,23 +21,13 @@ const DataComponent = () => {
             setData((prevData) => [...prevData, newData]);
             setTimestamps((prevTimestamps) => [...prevTimestamps, newData.Timestamp]);
             setRawValues((prevRawValues) => [...prevRawValues, newData[dataset]]);
+            setMeditationValues((prevMeditationValues) => [...prevMeditationValues, newData[dataset2]])
         });
         return () => {
             socket.disconnect();
         };
     }, []);
 
-	useEffect(() => {
-        const interval = setInterval(() => {
-            const now = Date.now();
-            const tenSecondsAgo = now - 10000;
-
-            setTimestamps((prevTimestamps) => prevTimestamps.filter(timestamp => new Date(timestamp).getTime() > tenSecondsAgo));
-            setRawValues((prevRawValues, prevTimestamps) => prevRawValues.filter((_, index) => new Date(prevTimestamps[index]).getTime() > tenSecondsAgo));
-        }, 1000);
-
-        return () => clearInterval(interval);
-    }, [timestamps, rawValues]);
 
     const startRecording = () => {
         fetch('http://localhost:8080/start')
@@ -69,12 +61,16 @@ const DataComponent = () => {
                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
                 fill: false,
             },
+            {
+                label: dataset2,
+                data: meditationValues,
+                borderColor: 'rgba(130, 80, 192, 1)',
+                backgroundColor: 'rgba(130,80, 192, 0.2)',
+                fill: false,
+            }
         ],
     };
 
-    const options = {
-        animations: false
-    }
     return (
         <div>
             <h1>Real-Time Data Visualization</h1>
