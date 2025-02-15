@@ -62,7 +62,7 @@ const DataComponent = () => {
             },
             {
                 label: dataset2,
-                data: meditationValues,
+                data: meditationValues.slice(-400),
                 borderColor: 'rgba(130, 80, 192, 1)',
                 backgroundColor: 'rgba(130, 80, 192, 0.2)',
                 fill: false,
