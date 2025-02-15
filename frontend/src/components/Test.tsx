@@ -23,6 +23,18 @@ const DataComponent = () => {
         };
     }, []);
 
+	useEffect(() => {
+        const interval = setInterval(() => {
+            const now = Date.now();
+            const tenSecondsAgo = now - 10000;
+
+            setTimestamps((prevTimestamps) => prevTimestamps.filter(timestamp => new Date(timestamp).getTime() > tenSecondsAgo));
+            setRawValues((prevRawValues, prevTimestamps) => prevRawValues.filter((_, index) => new Date(prevTimestamps[index]).getTime() > tenSecondsAgo));
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [timestamps, rawValues]);
+
     const startRecording = () => {
         fetch('http://localhost:8080/start')
             .then(response => response.json())
