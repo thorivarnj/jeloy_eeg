@@ -58,12 +58,15 @@ const DataComponent = () => {
         ],
     };
 
+    const options = {
+        animations: false
+    }
     return (
         <div>
             <h1>Real-Time Data Visualization</h1>
             <button onClick={startRecording}>Start Recording</button>
             <button onClick={stopRecording}>Stop Recording</button>
-            <Line data={chartData} />
+            <Line data={chartData} options={options} />
         </div>
     );
 };
