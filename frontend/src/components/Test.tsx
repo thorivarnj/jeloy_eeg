@@ -10,13 +10,15 @@ const DataComponent = () => {
     const [timestamps, setTimestamps] = useState([]);
     const [rawValues, setRawValues] = useState([]);
 
+    const dataset = 'Attention'
+
     useEffect(() => {
         const socket = io('http://localhost:8080');
         socket.on('new_data', (newData) => {
             console.log(newData);
             setData((prevData) => [...prevData, newData]);
             setTimestamps((prevTimestamps) => [...prevTimestamps, newData.Timestamp]);
-            setRawValues((prevRawValues) => [...prevRawValues, newData.Attention]);
+            setRawValues((prevRawValues) => [...prevRawValues, newData[dataset]]);
         });
         return () => {
             socket.disconnect();
@@ -61,7 +63,7 @@ const DataComponent = () => {
         labels: timestamps,
         datasets: [
             {
-                label: 'Raw Values',
+                label: dataset,
                 data: rawValues,
                 borderColor: 'rgba(75, 192, 192, 1)',
                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
