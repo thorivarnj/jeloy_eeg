@@ -1,5 +1,5 @@
 import './App.css'
-import { EEGChart } from './components/EEGChart.jsx'
+import { EEGChart } from './components/eegchart/EEGChart.jsx'
 
 function App() {
 
