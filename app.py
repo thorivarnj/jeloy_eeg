@@ -17,25 +17,21 @@ T = 1 / fs
 
 session_name = "default_session"
 ts = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%S')
-filename = f'recordings/{session_name}_{ts}.dat'
+#filename = f'recordings/{session_name}_{ts}.dat'
 
 headset = mindwave.Headset('/dev/tty.MindWaveMobile')
 
 recording = False
 
 def record_data():
-    global recording
-    start_time = time.time()
-    with open(filename, 'w', newline='') as f:
-        writer = csv.writer(f)
-        writer.writerow(['Timestamp', 'Raw', 'Attention', 'Meditation', 'delta', 'theta', 'low-alpha', 'high-alpha', 'low-beta', 'high-beta', 'low-gamma', 'mid-gamma'])
-        while recording:
-            elapsed_seconds = time.time() - start_time
-            values = list(headset.waves.values())
-            values = [elapsed_seconds, headset.raw_value, headset.attention, headset.meditation] + values
-            writer.writerow(values)
-            socketio.emit('new_data', {'Timestamp': elapsed_seconds, 'Raw': headset.raw_value, 'Attention': headset.attention, 'Meditation': headset.meditation, **headset.waves})
-            time.sleep(T)
+	global recording
+	start_time = time.time()
+	while recording:
+		elapsed_seconds = time.time() - start_time
+		values = list(headset.waves.values())
+		values = [elapsed_seconds, headset.raw_value, headset.attention, headset.meditation] + values
+		socketio.emit('new_data', {'Timestamp': elapsed_seconds, 'Raw': headset.raw_value, 'Attention': headset.attention, 'Meditation': headset.meditation, **headset.waves})
+		time.sleep(T)
 
 @app.route('/start', methods=['GET'])
 def start_recording():
