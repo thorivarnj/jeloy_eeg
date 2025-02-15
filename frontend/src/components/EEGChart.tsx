@@ -22,17 +22,34 @@ export const EEGChart = () => {
                 const rows = data.split('\n').slice(1); // Remove header
                 const timestamps = [];
                 const rawValues = [];
+                const attention = [];
+                const meditation = [];
+                const delta = [];
+                const theta = [];
+                const low_alpha = [];
+                const high_alpha = [];
+                const low_beta = [];
+                const high_beta = [];
+                const low_gamma = [];
+                const mid_gamma = [];
 
                 rows.forEach(row => {
                     const cols = row.split(',');
                     if (cols.length > 1) {
                         timestamps.push(cols[0]);
                         rawValues.push(parseFloat(cols[1]));
+                        attention.push(parseFloat(cols[2]));
+                        meditation.push(parseFloat(cols[3]));
+                        delta.push(parseFloat(cols[4]));
+                        theta.push(parseFloat(cols[5]));
+                        low_alpha.push(parseFloat(cols[6]));
+                        high_alpha.push(parseFloat(cols[7]));
+                        low_beta.push(parseFloat(cols[8]));
+                        high_beta.push(parseFloat(cols[9]));
+                        low_gamma.push(parseFloat(cols[10]));
+                        mid_gamma.push(parseFloat(cols[11]));
                     }
                 });
-
-                console.log('Timestamps:', timestamps); // Log the timestamps
-                console.log('Raw Values:', rawValues); // Log the raw values
 
                 setChartData({
                     labels: timestamps,
