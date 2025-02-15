@@ -7,7 +7,7 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 export const EEGChart = () => {
     const [chartData, setChartData] = useState({});
 
-    const file_path = '../../public/recordings/glenn_brainwaves_2025-02-14T20:25:57.csv'
+    const file_path = '~/recordings/glenn_brainwaves_2025-02-14T20:25:57.csv'
 
     useEffect(() => {
         // Fetch the CSV data

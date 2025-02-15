@@ -5,6 +5,7 @@ function App() {
 
     return (
         <>
+            <h1>EEG Chart</h1>
             <EEGChart />
         </>
     )
